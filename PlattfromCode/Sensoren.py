@@ -61,3 +61,4 @@ class Erkennung:
             self.abstand=self.S2.distanz()
         return self.abstand
 
+GPIO.cleanup()

@@ -5,15 +5,16 @@ import math
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-TIMEQUICK=0.0008
-TIMESLOW=0.003
+
+TIMEQUICK=0.004
+TIMESLOW=0.07
 
 class Motor:
     def __init__ (self,v,x,y,z):
-        self.A=v
-        self.B=x
-        self.C=y
-        self.D=z
+        self.A=v # WHITE
+        self.B=x # RED
+        self.C=y # BLUE
+        self.D=z # YELLOW
         
     def setup(self):
         GPIO.setup(self.A,GPIO.OUT)
@@ -24,6 +25,12 @@ class Motor:
         GPIO.setup(self.B,False)
         GPIO.setup(self.C,False)
         GPIO.setup(self.D,False)
+	GPIO.setup(20, GPIO.OUT)
+	GPIO.setup(20, True)
+	GPIO.setup(12, GPIO.OUT)
+	GPIO.setup(12, True)
+	GPIO.setup(7, GPIO.OUT)
+	GPIO.setup(7, True)
 
     def gpio_einstellung_m(self,a,b,c,d):
         GPIO.output(self.A,a)
@@ -32,7 +39,7 @@ class Motor:
         GPIO.output(self.D,d)
 
     def step1(self,speed):
-        self.gpio_einstellung_m(0,0,1,1)
+        self.gpio_einstellung_m(1,0,1,0)
         if speed == 1:
             sleep(TIMEQUICK)
         elif speed == 2:
@@ -46,7 +53,7 @@ class Motor:
             sleep(TIMESLOW)
     
     def step3(self,speed):
-        self.gpio_einstellung_m(1,1,0,0)
+        self.gpio_einstellung_m(0,1,0,1)
         if speed == 1:
             sleep(TIMEQUICK)
         elif speed == 2:
@@ -58,6 +65,35 @@ class Motor:
             sleep(TIMEQUICK)
         elif speed == 2:
             sleep(TIMESLOW)
+
+    def step14(self,speed):
+        self.gpio_einstellung_m(1,0,0,0)
+        if speed == 1:
+            sleep(TIMEQUICK)
+        elif speed == 2:
+            sleep(TIMESLOW)
+
+    def step43(self,speed):
+        self.gpio_einstellung_m(0,0,0,1)
+        if speed == 1:
+            sleep(TIMEQUICK)
+        elif speed == 2:
+            sleep(TIMESLOW)
+
+    def step32(self,speed):
+        self.gpio_einstellung_m(0,1,0,0)
+        if speed == 1:
+            sleep(TIMEQUICK)
+        elif speed == 2:
+            sleep(TIMESLOW)
+
+    def step21(self,speed):
+        self.gpio_einstellung_m(0,0,1,0)
+        if speed == 1:
+            sleep(TIMEQUICK)
+        elif speed == 2:
+            sleep(TIMESLOW)
+
 
 class Antrieb:
     def __init__(self):
@@ -79,12 +115,20 @@ class Antrieb:
         while anzahlsteps:
             self.M1.step1(speed)
             self.M2.step1(speed)
-            self.M1.step2(speed)
+	    self.M1.step14(speed)
+	    self.M2.step21(speed)
+            self.M1.step4(speed)
             self.M2.step2(speed)
+	    self.M1.step43(speed)
+	    self.M2.step32(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-            self.M1.step4(speed)
+	    self.M1.step32(speed)
+	    self.M2.step43(speed)
+            self.M1.step2(speed)
             self.M2.step4(speed)
+	    self.M1.step21(speed)
+	    self.M2.step14(speed)
             anzahlsteps=anzahlsteps-1
         self.stopradantrieb()
     
@@ -92,12 +136,20 @@ class Antrieb:
         while anzahlsteps:
             self.M1.step1(speed)
             self.M2.step1(speed)
-            self.M1.step4(speed)
+	    self.M1.step21(speed)
+	    self.M2.step14(speed)
+            self.M1.step2(speed)
             self.M2.step4(speed)
+	    self.M1.step32(speed)
+	    self.M2.step43(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-            self.M1.step2(speed)
+	    self.M1.step43(speed)
+	    self.M2.step32(speed)
+            self.M1.step4(speed)
             self.M2.step2(speed)
+	    self.M1.step14(speed)
+	    self.M2.step21(speed)
             anzahlsteps=anzahlsteps-1
         self.stopradantrieb()
     
@@ -105,12 +157,20 @@ class Antrieb:
         while anzahlsteps:
             self.M1.step1(speed)
             self.M2.step1(speed)
-            self.M1.step2(speed)
+	    self.M1.step14(speed)
+	    self.M2.step14(speed)
+            self.M1.step4(speed)
             self.M2.step4(speed)
+	    self.M1.step43(speed)
+	    self.M2.step43(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-            self.M1.step4(speed)
+	    self.M1.step32(speed)
+	    self.M2.step32(speed)
+            self.M1.step2(speed)
             self.M2.step2(speed)
+	    self.M1.step21(speed)
+	    self.M2.step21(speed)
             anzahlsteps=anzahlsteps-1
         self.stopradantrieb()
         
@@ -118,30 +178,45 @@ class Antrieb:
         while anzahlsteps:
             self.M1.step1(speed)
             self.M2.step1(speed)
-            self.M1.step4(speed)
+	    self.M1.step21(speed)
+	    self.M2.step21(speed)
+            self.M1.step2(speed)
             self.M2.step2(speed)
+	    self.M1.step32(speed)
+	    self.M2.step32(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-            self.M1.step2(speed)
+	    self.M1.step43(speed)
+	    self.M2.step43(speed)
+            self.M1.step4(speed)
             self.M2.step4(speed)
+	    self.M1.step14(speed)
+	    self.M2.step14(speed)
             anzahlsteps=anzahlsteps-1
         self.stopradantrieb()
     
     def hubhoch(self,anzahlsteps,speed):
         while anzahlsteps:
             self.M3.step1(speed)
-            self.M3.step2(speed)
-            self.M3.step3(speed)
+	    self.M3.step14(speed)
             self.M3.step4(speed)
+	    self.M3.step43(speed)
+            self.M3.step3(speed)
+	    self.M3.step32(speed)
+            self.M3.step2(speed)
+	    self.M3.step21(speed)
             anzahlsteps=anzahlsteps-1
-        self.stophubantrieb()
                 
     def hubrunter(self,anzahlsteps,speed):
         while anzahlsteps:
-            self.M3.step1(speed)
-            self.M3.step4(speed)
             self.M3.step3(speed)
+	    self.M3.step43(speed)
+            self.M3.step4(speed)
+	    self.M3.step14(speed)
+            self.M3.step1(speed)
+	    self.M3.step21(speed)
             self.M3.step2(speed)
+	    self.M3.step32(speed)
             anzahlsteps=anzahlsteps-1
         self.stophubantrieb()
         
@@ -192,5 +267,4 @@ class Antrieb:
                     self.M3.step3(speed)
                     self.M3.step2(speed)
                     steps=steps-1
-
 
