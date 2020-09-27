@@ -10,11 +10,17 @@ SPEEDLANGSAM=2
 
 #Initialisierung mit gewuenschtem minimalen Sicherheitsabstand und verwendetem Raddurchmesser
 #Laengenangaben in Meter
+#Aufsatz True=Piker / False = Schaufel
 class Plattform():
-    def __init__(self,sicherheitsabstand,raddurchmesser):
+    def __init__(self,sicherheitsabstand,raddurchmesser,aufsatz):
         self.sensorik=Sensoren.Erkennung(sicherheitsabstand)
         self.motoren=Antriebe2.Antrieb()
         self.radumfang=raddurchmesser*math.pi
+        self.aufsatz=aufsatz
+        if self.aufsatz:
+            self.motoren.hubhoch(1,1)
+        else:
+            self.motoren.hubhoch(0,1)
         
 #Eingabe der zu fahrenden Strecke fuer Funktionen zur Fortbewegung in Meter
 #Eingabe der gewuenschten Rotationen fuer Funktionen in Grad

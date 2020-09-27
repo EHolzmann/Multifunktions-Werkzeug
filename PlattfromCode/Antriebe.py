@@ -25,12 +25,12 @@ class Motor:
         GPIO.setup(self.B,False)
         GPIO.setup(self.C,False)
         GPIO.setup(self.D,False)
-	GPIO.setup(20, GPIO.OUT)
-	GPIO.setup(20, True)
-	GPIO.setup(12, GPIO.OUT)
-	GPIO.setup(12, True)
-	GPIO.setup(7, GPIO.OUT)
-	GPIO.setup(7, True)
+    	GPIO.setup(20, GPIO.OUT)
+    	GPIO.setup(20, True)
+    	GPIO.setup(12, GPIO.OUT)
+    	GPIO.setup(12, True)
+    	GPIO.setup(7, GPIO.OUT)
+    	GPIO.setup(7, True)
 
     def gpio_einstellung_m(self,a,b,c,d):
         GPIO.output(self.A,a)
@@ -111,113 +111,157 @@ class Antrieb:
     def stophubantrieb(self):
         self.M3.gpio_einstellung_m(0,0,0,0)
         
-    def vorwaertsstep(self,anzahlsteps,speed):
-        while anzahlsteps:
+# distance Angabe in mm // Kleinste translatorische Bewegung 4mm         
+        
+    def vorwaertsstep(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M1.step1(speed)
             self.M2.step1(speed)
-	    self.M1.step14(speed)
-	    self.M2.step21(speed)
+    	    self.M1.step14(speed)
+    	    self.M2.step21(speed)
             self.M1.step4(speed)
             self.M2.step2(speed)
-	    self.M1.step43(speed)
-	    self.M2.step32(speed)
+    	    self.M1.step43(speed)
+    	    self.M2.step32(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-	    self.M1.step32(speed)
-	    self.M2.step43(speed)
+    	    self.M1.step32(speed)
+    	    self.M2.step43(speed)
             self.M1.step2(speed)
             self.M2.step4(speed)
-	    self.M1.step21(speed)
-	    self.M2.step14(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M1.step21(speed)
+    	    self.M2.step14(speed)
+            distance=distance-1
         self.stopradantrieb()
     
-    def rueckwaertsstep(self,anzahlsteps,speed):
-        while anzahlsteps:
+    def rueckwaertsstep(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M1.step1(speed)
             self.M2.step1(speed)
-	    self.M1.step21(speed)
-	    self.M2.step14(speed)
+    	    self.M1.step21(speed)
+    	    self.M2.step14(speed)
             self.M1.step2(speed)
             self.M2.step4(speed)
-	    self.M1.step32(speed)
-	    self.M2.step43(speed)
+    	    self.M1.step32(speed)
+    	    self.M2.step43(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-	    self.M1.step43(speed)
-	    self.M2.step32(speed)
+    	    self.M1.step43(speed)
+    	    self.M2.step32(speed)
             self.M1.step4(speed)
             self.M2.step2(speed)
-	    self.M1.step14(speed)
-	    self.M2.step21(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M1.step14(speed)
+    	    self.M2.step21(speed)
+            distance=distance-1
         self.stopradantrieb()
     
-    def linksdrehen(self,anzahlsteps,speed):
-        while anzahlsteps:
+    def linksdrehen(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M1.step1(speed)
             self.M2.step1(speed)
-	    self.M1.step14(speed)
-	    self.M2.step14(speed)
+    	    self.M1.step14(speed)
+    	    self.M2.step14(speed)
             self.M1.step4(speed)
             self.M2.step4(speed)
-	    self.M1.step43(speed)
-	    self.M2.step43(speed)
+    	    self.M1.step43(speed)
+    	    self.M2.step43(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-	    self.M1.step32(speed)
-	    self.M2.step32(speed)
+    	    self.M1.step32(speed)
+    	    self.M2.step32(speed)
             self.M1.step2(speed)
             self.M2.step2(speed)
-	    self.M1.step21(speed)
-	    self.M2.step21(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M1.step21(speed)
+    	    self.M2.step21(speed)
+            distance=distance-1
         self.stopradantrieb()
         
-    def rechtsdrehen(self,anzahlsteps,speed):
-        while anzahlsteps:
+    def rechtsdrehen(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M1.step1(speed)
             self.M2.step1(speed)
-	    self.M1.step21(speed)
-	    self.M2.step21(speed)
+    	    self.M1.step21(speed)
+    	    self.M2.step21(speed)
             self.M1.step2(speed)
             self.M2.step2(speed)
-	    self.M1.step32(speed)
-	    self.M2.step32(speed)
+    	    self.M1.step32(speed)
+    	    self.M2.step32(speed)
             self.M1.step3(speed)
             self.M2.step3(speed)
-	    self.M1.step43(speed)
-	    self.M2.step43(speed)
+    	    self.M1.step43(speed)
+    	    self.M2.step43(speed)
             self.M1.step4(speed)
             self.M2.step4(speed)
-	    self.M1.step14(speed)
-	    self.M2.step14(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M1.step14(speed)
+    	    self.M2.step14(speed)
+            distance=distance-1
         self.stopradantrieb()
     
-    def hubhoch(self,anzahlsteps,speed):
-        while anzahlsteps:
+    def hubhoch(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M3.step1(speed)
-	    self.M3.step14(speed)
+    	    self.M3.step14(speed)
             self.M3.step4(speed)
-	    self.M3.step43(speed)
+    	    self.M3.step43(speed)
             self.M3.step3(speed)
-	    self.M3.step32(speed)
+    	    self.M3.step32(speed)
             self.M3.step2(speed)
-	    self.M3.step21(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M3.step21(speed)
+            distance=distance-1
                 
-    def hubrunter(self,anzahlsteps,speed):
-        while anzahlsteps:
+    def hubrunter(self,distance,speed):
+        y=distance // 4
+        z=distance % 4
+        if z < 2:
+            z=0
+        else:
+            z=1
+        distance=y+z
+        while distance:
             self.M3.step3(speed)
-	    self.M3.step43(speed)
+    	    self.M3.step43(speed)
             self.M3.step4(speed)
-	    self.M3.step14(speed)
+    	    self.M3.step14(speed)
             self.M3.step1(speed)
-	    self.M3.step21(speed)
+    	    self.M3.step21(speed)
             self.M3.step2(speed)
-	    self.M3.step32(speed)
-            anzahlsteps=anzahlsteps-1
+    	    self.M3.step32(speed)
+            distance=distance-1
         self.stophubantrieb()
         
 #beliebigen Motor ausrichten    
