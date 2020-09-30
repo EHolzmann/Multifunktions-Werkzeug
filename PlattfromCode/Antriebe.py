@@ -123,22 +123,23 @@ class Antrieb:
         distance=y+z
         while distance:
             self.M1.step1(speed)
-            self.M2.step1(speed)
-    	    self.M1.step14(speed)
-    	    self.M2.step21(speed)
-            self.M1.step4(speed)
-            self.M2.step2(speed)
-    	    self.M1.step43(speed)
-    	    self.M2.step32(speed)
-            self.M1.step3(speed)
             self.M2.step3(speed)
-    	    self.M1.step32(speed)
+    	    self.M1.step14(speed)
     	    self.M2.step43(speed)
-            self.M1.step2(speed)
+            self.M1.step4(speed)
             self.M2.step4(speed)
+    	    self.M1.step43(speed)
+    	    self.M2.step14(speed)
+            self.M1.step3(speed)
+            self.M2.step1(speed)
+    	    self.M1.step32(speed)
+    	    self.M2.step21(speed)
+            self.M1.step2(speed)
+            self.M2.step1(speed)
     	    self.M1.step21(speed)
     	    self.M2.step14(speed)
-            distance=distance-1
+            #self.M1.step1(speed)
+	    distance=distance-1
         self.stopradantrieb()
     
     def rueckwaertsstep(self,distance,speed):
@@ -299,10 +300,10 @@ class Antrieb:
         if motorwahl==3:
             if richtung == "r":
                 while steps:
-                    self.M3.step1(speed)
-                    self.M3.step2(speed)
                     self.M3.step3(speed)
                     self.M3.step4(speed)
+                    self.M3.step1(speed)
+                    self.M3.step2(speed)
                     steps=steps-1
             if richtung == "l":
                 while steps:

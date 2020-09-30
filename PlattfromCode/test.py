@@ -1,6 +1,4 @@
 import Plattform 
-import Sensoren
-import Antriebe2
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -29,8 +27,10 @@ GPIO.setwarnings(False)
 #test.vorwaertsstep(20,1)
 #test.stophubantrieb()
 #test.stopradantrieb()
-pf = Plattform.Plattform(0.1,0.65)
-pf.nachvorne(0.5,1)
+pf = Plattform.Plattform(0.1,0.65,1)
+#pf.nachvorne(200,1)
+sleep(1)
+#pf.nachhinten(100,1)
 #sleep(1)
 #pf.armanheben()
 #sleep(1)
@@ -46,4 +46,7 @@ pf.nachvorne(0.5,1)
 #sleep(1)
 #pf.armabsetzen()
 #sleep(1)
+pf.motoren.motorausrichten(1,'r',100,1)
+pf.motoren.stophubantrieb()
+pf.motoren.stopradantrieb()
 
